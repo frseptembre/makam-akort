@@ -160,7 +160,7 @@
     </div>
     <div class="stat">
       <div class="k">Duyulan karar</div>
-      <div class="v" id="rDuyulan">—<small>diyapazona göre</small></div>
+      <div class="v" id="rDuyulan">—<small>piyanoya göre</small></div>
     </div>
     <div class="stat">
       <div class="k">Kaydırma</div>
@@ -286,7 +286,7 @@ function hesapla(){
   document.getElementById("ctrSub").textContent=NOTA[calinan]+" · "+a.etiket;
 
   document.getElementById("rAkort").firstChild.textContent=tam;
-  document.getElementById("rHarf").textContent="diyapazona göre "+a.harf;
+  document.getElementById("rHarf").textContent="Türk müziği sazlarına göre "+a.harf;
   var duy=(calinan-5+12)%12;
   document.getElementById("rDuyulan").firstChild.textContent=NOTA[duy];
   document.getElementById("rSesten").textContent=a.etiket;
