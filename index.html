@@ -89,6 +89,31 @@
     background:rgba(201,151,63,.07);border:1px solid rgba(201,151,63,.25);
     border-radius:10px;padding:10px 13px;display:block;
   }
+  .ses{
+    margin-top:22px;background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;padding:18px;
+  }
+  .ses h2{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2}
+  .ses .sub{font-size:12px;color:var(--ivory-dim);margin:4px 0 16px;line-height:1.5}
+  .btnsat{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  button{
+    background:transparent;border:1px solid var(--line);border-radius:10px;
+    color:var(--ivory);font-family:var(--sans);font-size:14px;font-weight:500;
+    padding:11px 16px;cursor:pointer;transition:background .2s,border-color .2s;
+  }
+  button:hover{background:rgba(201,151,63,.07);border-color:var(--brass)}
+  button:active{transform:scale(.98)}
+  button.aktif{background:var(--brass);border-color:var(--brass);color:#16110e}
+  button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  .sesbilgi{font-size:12.5px;color:var(--ivory-faint);margin-top:12px;line-height:1.6}
+  .tuner{margin-top:16px;border-top:1px solid var(--line);padding-top:16px;display:none}
+  .tnota{font-family:var(--display);font-size:44px;font-weight:600;line-height:1.1;text-align:center}
+  .tperde{font-size:13px;color:var(--brass);text-align:center;margin-top:2px;min-height:1.2em}
+  .tbar{position:relative;height:34px;margin:14px 0 6px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface-2)}
+  .tmerkez{position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--brass);opacity:.55}
+  .tig{position:absolute;top:4px;bottom:4px;width:4px;border-radius:2px;background:var(--ivory);left:50%;transition:left .12s linear,background .2s}
+  .tig.tam{background:#7bd88f}
+  .tsapma{font-size:13px;color:var(--ivory-dim);text-align:center;min-height:1.3em}
   .not{
     margin-top:22px;text-align:center;font-size:12px;color:var(--ivory-faint);line-height:1.7;
   }
@@ -108,7 +133,32 @@
     .wheelwrap{max-width:720px}
     .hint{font-size:13px}
     .stat .v{font-size:19px}
-    .not{font-size:13px}
+    .ses{
+    margin-top:22px;background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;padding:18px;
+  }
+  .ses h2{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2}
+  .ses .sub{font-size:12px;color:var(--ivory-dim);margin:4px 0 16px;line-height:1.5}
+  .btnsat{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  button{
+    background:transparent;border:1px solid var(--line);border-radius:10px;
+    color:var(--ivory);font-family:var(--sans);font-size:14px;font-weight:500;
+    padding:11px 16px;cursor:pointer;transition:background .2s,border-color .2s;
+  }
+  button:hover{background:rgba(201,151,63,.07);border-color:var(--brass)}
+  button:active{transform:scale(.98)}
+  button.aktif{background:var(--brass);border-color:var(--brass);color:#16110e}
+  button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  .sesbilgi{font-size:12.5px;color:var(--ivory-faint);margin-top:12px;line-height:1.6}
+  .tuner{margin-top:16px;border-top:1px solid var(--line);padding-top:16px;display:none}
+  .tnota{font-family:var(--display);font-size:44px;font-weight:600;line-height:1.1;text-align:center}
+  .tperde{font-size:13px;color:var(--brass);text-align:center;margin-top:2px;min-height:1.2em}
+  .tbar{position:relative;height:34px;margin:14px 0 6px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface-2)}
+  .tmerkez{position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--brass);opacity:.55}
+  .tig{position:absolute;top:4px;bottom:4px;width:4px;border-radius:2px;background:var(--ivory);left:50%;transition:left .12s linear,background .2s}
+  .tig.tam{background:#7bd88f}
+  .tsapma{font-size:13px;color:var(--ivory-dim);text-align:center;min-height:1.3em}
+  .not{font-size:13px}
   }
   @media(min-width:2200px){
     .app{max-width:900px}
@@ -198,6 +248,24 @@
       <strong id="cevapPerde">—</strong>
       <span id="cevapDetay"></span>
       <span class="koma" id="komaNot2" style="display:none"></span>
+    </div>
+  </div>
+
+  <div class="ses">
+    <h2>Ses ver ve akort et</h2>
+    <p class="sub">Yukarıda seçtiğin akorda göre karar sesini duyur, ya da mikrofonla sazının perdesini ölç.</p>
+    <div class="btnsat">
+      <button id="btnKarar" type="button">Karar sesini çal</button>
+      <button id="btnLa" type="button">La 440</button>
+      <button id="btnDur" type="button">Durdur</button>
+      <button id="btnTuner" type="button">Mikrofonla ölç</button>
+    </div>
+    <p class="sesbilgi" id="sesbilgi"></p>
+    <div class="tuner" id="tuner">
+      <div class="tnota" id="tnota">—</div>
+      <div class="tperde" id="tperde"></div>
+      <div class="tbar"><div class="tmerkez"></div><div class="tig" id="tig"></div></div>
+      <div class="tsapma" id="tsapma">Sazını çal</div>
     </div>
   </div>
 
@@ -373,6 +441,121 @@ m2.addEventListener("change",hesapla2);
 a2.addEventListener("change",hesapla2);
 m2.value=7;a2.value=2;
 hesapla2();
+
+var AC=null,osc=null,gain=null,sonHz=0,sonAd="";
+function frekans(midi){return 440*Math.pow(2,(midi-69)/12);}
+function midiAdi(midi){return NOTA[((midi%12)+12)%12]+(Math.floor(midi/12)-1);}
+
+function guncelleSes(){
+  var m=MAKAM[mSel.value],p=PERDE[pSel.value];
+  var midi=55+p[1];
+  sonHz=frekans(midi);sonAd=midiAdi(midi);
+  document.getElementById("sesbilgi").textContent=
+    "Bu icrada karar sesi "+sonAd+" ("+sonHz.toFixed(1)+" Hz) olarak duyulur.";
+  if(osc&&gain&&gain.gain.value>0.01)osc.frequency.setTargetAtTime(sonHz,AC.currentTime,.02);
+}
+
+function calStart(hz){
+  if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
+  if(AC.state==="suspended")AC.resume();
+  if(!osc){
+    osc=AC.createOscillator();gain=AC.createGain();
+    osc.type="triangle";gain.gain.value=0;
+    osc.connect(gain);gain.connect(AC.destination);osc.start();
+  }
+  osc.frequency.setTargetAtTime(hz,AC.currentTime,.01);
+  gain.gain.setTargetAtTime(.16,AC.currentTime,.02);
+}
+function calDur(){
+  if(gain)gain.gain.setTargetAtTime(0,AC.currentTime,.05);
+  document.getElementById("btnKarar").classList.remove("aktif");
+  document.getElementById("btnLa").classList.remove("aktif");
+}
+document.getElementById("btnKarar").addEventListener("click",function(){
+  calStart(sonHz);this.classList.add("aktif");
+  document.getElementById("btnLa").classList.remove("aktif");
+});
+document.getElementById("btnLa").addEventListener("click",function(){
+  calStart(440);this.classList.add("aktif");
+  document.getElementById("btnKarar").classList.remove("aktif");
+});
+document.getElementById("btnDur").addEventListener("click",calDur);
+
+var tunerAcik=false,analiz=null,buf=null,akis=null,raf=null;
+document.getElementById("btnTuner").addEventListener("click",function(){
+  var btn=this;
+  if(tunerAcik){tunerKapat();btn.textContent="Mikrofonla ölç";btn.classList.remove("aktif");return;}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    document.getElementById("tsapma").textContent="Bu tarayıcı mikrofon erişimini desteklemiyor.";
+    document.getElementById("tuner").style.display="block";return;
+  }
+  navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}})
+  .then(function(st){
+    akis=st;tunerAcik=true;
+    btn.textContent="Ölçümü durdur";btn.classList.add("aktif");
+    document.getElementById("tuner").style.display="block";
+    if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==="suspended")AC.resume();
+    var src=AC.createMediaStreamSource(st);
+    analiz=AC.createAnalyser();analiz.fftSize=2048;
+    buf=new Float32Array(analiz.fftSize);
+    src.connect(analiz);olc();
+  })
+  .catch(function(){
+    document.getElementById("tuner").style.display="block";
+    document.getElementById("tsapma").textContent="Mikrofon izni verilmedi.";
+  });
+});
+function tunerKapat(){
+  tunerAcik=false;
+  if(raf)cancelAnimationFrame(raf);
+  if(akis)akis.getTracks().forEach(function(t){t.stop();});
+  document.getElementById("tuner").style.display="none";
+}
+function perdeBul(b,sr){
+  var n=b.length,rms=0,i;
+  for(i=0;i<n;i++)rms+=b[i]*b[i];
+  rms=Math.sqrt(rms/n);
+  if(rms<0.008)return -1;
+  var d=new Float32Array(n/2);
+  for(var t=0;t<n/2;t++){var s=0;for(i=0;i<n/2;i++){var x=b[i]-b[i+t];s+=x*x;}d[t]=s;}
+  var cm=new Float32Array(n/2);cm[0]=1;var top=0;
+  for(t=1;t<n/2;t++){top+=d[t];cm[t]=d[t]*t/top;}
+  var T=-1;
+  for(t=2;t<n/2;t++){
+    if(cm[t]<0.15){while(t+1<n/2&&cm[t+1]<cm[t])t++;T=t;break;}
+  }
+  if(T<0)return -1;
+  var y1=cm[T-1],y2=cm[T],y3=cm[T+1]||y2;
+  var duz=T+(y3-y1)/(2*(2*y2-y1-y3)||1);
+  return sr/duz;
+}
+function olc(){
+  if(!tunerAcik)return;
+  analiz.getFloatTimeDomainData(buf);
+  var hz=perdeBul(buf,AC.sampleRate);
+  var tn=document.getElementById("tnota"),tp=document.getElementById("tperde"),
+      ts=document.getElementById("tsapma"),ti=document.getElementById("tig");
+  if(hz>0&&hz<2000){
+    var midi=69+12*Math.log2(hz/440);
+    var yakin=Math.round(midi);
+    var sent=Math.round((midi-yakin)*100);
+    tn.textContent=midiAdi(yakin);
+    tp.textContent=hz.toFixed(1)+" Hz";
+    ts.textContent=(sent>0?"+":"")+sent+" sent"+(Math.abs(sent)<=5?" · tam":"");
+    var kay=Math.max(-50,Math.min(50,sent));
+    ti.style.left="calc(50% + "+(kay*0.9)+"% * 0.9)";
+    ti.style.left=(50+kay*0.9)+"%";
+    ti.classList.toggle("tam",Math.abs(sent)<=5);
+  }else{
+    tn.textContent="—";tp.textContent="";ts.textContent="Sazını çal";
+    ti.style.left="50%";ti.classList.remove("tam");
+  }
+  raf=requestAnimationFrame(olc);
+}
+mSel.addEventListener("change",guncelleSes);
+pSel.addEventListener("change",guncelleSes);
+guncelleSes();
 </script>
 </body>
 </html>
