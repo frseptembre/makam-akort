@@ -43,6 +43,15 @@
   }
   header p{font-size:13px;color:var(--ivory-dim);margin-top:8px;line-height:1.6}
 
+  .tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  .tab{background:transparent;border:none;border-bottom:2px solid transparent;
+    color:var(--ivory-faint);font-family:var(--sans);font-size:14px;font-weight:500;
+    padding:9px 14px;cursor:pointer;border-radius:0;transition:color .2s,border-color .2s}
+  .tab:hover{color:var(--ivory-dim)}
+  .tab.aktifTab{color:var(--brass);border-bottom-color:var(--brass)}
+  .tab:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
+  .panel.gizli{display:none}
+  .inv,.ses{margin-top:0}
   .controls{display:grid;gap:12px;margin-bottom:8px}
   @media(min-width:460px){.controls{grid-template-columns:1fr 1fr}}
   .field label{
@@ -178,6 +187,13 @@
     <p>Makamı ve hangi perdeden çalındığını seç;<br>çark hangi akorttan icra edildiğini göstersin.</p>
   </header>
 
+  <div class="tabs">
+    <button class="tab aktifTab" id="tab0" type="button">Çark</button>
+    <button class="tab" id="tab1" type="button">Ahenkten perdeye</button>
+    <button class="tab" id="tab2" type="button">Akort</button>
+  </div>
+
+  <div class="panel" id="panel0">
   <div class="controls">
     <div class="field">
       <label for="makam">Makam</label>
@@ -229,9 +245,13 @@
     </div>
   </div>
 
+  <p class="koma" id="komaNot" style="display:none"></p>
+  </div>
+
+  <div class="panel gizli" id="panel1">
   <div class="inv">
-    <h2>Tersinden: hangi perdeden çalayım?</h2>
-    <p class="sub">Makamı ve hedef akordu seç; hangi perdeden çalman gerektiğini söylesin.</p>
+    <h2>Ahenkten perdeye</h2>
+    <p class="sub">Makamı ve icra edeceğin ahengi seç; kararı hangi perdeye taşıyacağını söylesin.</p>
     <div class="controls">
       <div class="field">
         <label for="makam2">Makam</label>
@@ -239,7 +259,7 @@
         <div class="hint" id="kararinfo2"></div>
       </div>
       <div class="field">
-        <label for="akort2">Hedef akort</label>
+        <label for="akort2">Ahenk</label>
         <select id="akort2"></select>
         <div class="hint" id="akortinfo2"></div>
       </div>
@@ -250,7 +270,9 @@
       <span class="koma" id="komaNot2" style="display:none"></span>
     </div>
   </div>
+  </div>
 
+  <div class="panel gizli" id="panel2">
   <div class="ses">
     <h2>Ses ver ve akort et</h2>
     <p class="sub">Yukarıda seçtiğin akorda göre karar sesini duyur, ya da mikrofonla sazının perdesini ölç.</p>
@@ -268,8 +290,7 @@
       <div class="tsapma" id="tsapma">Sazını çal</div>
     </div>
   </div>
-
-  <p class="koma" id="komaNot" style="display:none"></p>
+  </div>
 
   <p class="not">Nota her zaman yerinden (Bolahenk) yazılır; akort adı, icranın kaç ses kaydırıldığını söyler.<br>Perde adları Arel-Ezgi-Uzdilek sistemine göredir. Hesap, ahenk sisteminin adımı olan yarım ses üzerinden yapılır; koma farkları bu ızgaranın altında kalır.</p>
 </div>
@@ -279,7 +300,7 @@ var AKORT=[
  {ad:"Bolahenk",harf:"G",etiket:"yerinden"},
  {ad:"Sipürde Mb.",tam:"Sipürde Mabeyni",harf:"F#",etiket:"yarım sesten"},
  {ad:"Sipürde",harf:"F",etiket:"1 sesten"},
- {ad:"Müstahzen",harf:"E",etiket:"1,5 sesten"},
+ {ad:"Müstahsen",harf:"E",etiket:"1,5 sesten"},
  {ad:"Yıldız",harf:"Eb",etiket:"2 sesten"},
  {ad:"Kız",harf:"D",etiket:"4 sesten"},
  {ad:"Mansur Mb.",tam:"Mansur Mabeyni",harf:"Db",etiket:"4,5 sesten"},
@@ -428,11 +449,11 @@ function hesapla2(){
   document.getElementById("cevapPerde").textContent=PERDE_ADI[calinacak];
   var duy=(calinacak-5+12)%12;
   var det;
-  if(pest===0){det="Yerinden çal; yazıda "+NOTA[calinacak]+", diyapazonda karar "+NOTA[duy]+" duyulur.";}
+  if(pest===0){det="Kararı yerinde bırak. Yazıda "+NOTA[calinacak]+"; karar sesi piyanoda "+NOTA[duy]+" duyulur.";}
   else{
     var tiz=12-pest;
     var yon=(tiz<pest)?((tiz/2).toString().replace(".",",")+" ses tiz"):((pest/2).toString().replace(".",",")+" ses pest");
-    det="Kararı bu perdeye taşı ("+yon+"); yazıda "+NOTA[calinacak]+", diyapazonda karar "+NOTA[duy]+" duyulur.";
+    det="Kararı bu perdeye taşı ("+yon+"). Yazıda "+NOTA[calinacak]+"; karar sesi piyanoda "+NOTA[duy]+" duyulur.";
   }
   document.getElementById("cevapDetay").textContent=det;
   komaUyari("komaNot2",karar,pest,PERDE_ADI[calinacak]);
@@ -556,6 +577,16 @@ function olc(){
 mSel.addEventListener("change",guncelleSes);
 pSel.addEventListener("change",guncelleSes);
 guncelleSes();
+
+function sekme(n){
+  for(var i=0;i<3;i++){
+    document.getElementById("panel"+i).classList.toggle("gizli",i!==n);
+    document.getElementById("tab"+i).classList.toggle("aktifTab",i===n);
+  }
+}
+document.getElementById("tab0").addEventListener("click",function(){sekme(0);});
+document.getElementById("tab1").addEventListener("click",function(){sekme(1);});
+document.getElementById("tab2").addEventListener("click",function(){sekme(2);});
 </script>
 </body>
 </html>
