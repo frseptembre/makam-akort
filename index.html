@@ -242,7 +242,7 @@ AKORT.forEach(function(a,i){
   c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r",16);
   var t=document.createElementNS(NS,"text");
   t.setAttribute("x",x);t.setAttribute("y",y+5);t.setAttribute("text-anchor","middle");
-  t.setAttribute("class","node-harf");t.textContent=a.harf;
+  t.setAttribute("class","node-harf");t.setAttribute("id","harf"+i);t.textContent=a.harf;
   var lx=CX+RLABEL*cs, ly=CY+RLABEL*sn;
   var anchor=cs>.35?"start":(cs<-.35?"end":"middle");
   var dy=sn<-.85?-4:(sn>.85?12:4);
@@ -267,7 +267,10 @@ function hesapla(){
   lastDeg+=fark;
   needle.style.transform="rotate("+lastDeg+"deg)";
 
-  for(var i=0;i<12;i++)document.getElementById("node"+i).classList.toggle("on",i===pest);
+  for(var i=0;i<12;i++){
+    document.getElementById("node"+i).classList.toggle("on",i===pest);
+    document.getElementById("harf"+i).textContent=NOTA[(karar-i+12)%12];
+  }
 
   var tam=a.tam||a.ad, l1=document.getElementById("ctrAkort"), l2=document.getElementById("ctrAkort2");
   if(tam.indexOf(" ")>0&&tam.length>10){
@@ -280,7 +283,7 @@ function hesapla(){
     l2.textContent="";
     document.getElementById("ctrSub").setAttribute("y",264);
   }
-  document.getElementById("ctrSub").textContent=a.harf+" · "+a.etiket;
+  document.getElementById("ctrSub").textContent=NOTA[calinan]+" · "+a.etiket;
 
   document.getElementById("rAkort").firstChild.textContent=tam;
   document.getElementById("rHarf").textContent="diyapazona göre "+a.harf;
