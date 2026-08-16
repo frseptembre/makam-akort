@@ -84,6 +84,11 @@
     .result{grid-template-columns:1fr 1fr}
     .stat:first-child{grid-column:1/-1}
   }
+  .koma{
+    margin-top:12px;font-size:12.5px;line-height:1.6;color:var(--brass);
+    background:rgba(201,151,63,.07);border:1px solid rgba(201,151,63,.25);
+    border-radius:10px;padding:10px 13px;display:block;
+  }
   .not{
     margin-top:22px;text-align:center;font-size:12px;color:var(--ivory-faint);line-height:1.7;
   }
@@ -146,6 +151,12 @@
         <path d="M320 112 L326 128 L314 128 Z" fill="var(--brass)"/>
       </g>
       <circle cx="320" cy="230" r="86" fill="var(--surface)" stroke="var(--line)" stroke-width="1"/>
+      <g id="komaRozet" style="display:none;cursor:pointer">
+        <circle cx="548" cy="70" r="21" fill="rgba(201,151,63,.12)" stroke="var(--brass)" stroke-width="1.5"/>
+        <text x="548" y="80" text-anchor="middle" font-family="var(--sans)" font-size="26" font-weight="600" fill="var(--brass)">!</text>
+        <text id="komaRozetAd" x="548" y="107" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="600" fill="var(--brass)"></text>
+        <text x="548" y="123" text-anchor="middle" font-family="var(--sans)" font-size="11" fill="var(--ivory-dim)">koma perdesi</text>
+      </g>
       <g id="nodes"></g>
       <text id="ctrAkort" class="ctr-akort" x="320" y="234" text-anchor="middle" font-size="28">—</text>
       <text id="ctrAkort2" class="ctr-akort" x="320" y="234" text-anchor="middle" font-size="28"></text>
@@ -186,10 +197,13 @@
     <div class="answer">
       <strong id="cevapPerde">—</strong>
       <span id="cevapDetay"></span>
+      <span class="koma" id="komaNot2" style="display:none"></span>
     </div>
   </div>
 
-  <p class="not">Nota her zaman yerinden (Bolahenk) yazılır; akort adı, icranın kaç ses kaydırıldığını söyler.</p>
+  <p class="koma" id="komaNot" style="display:none"></p>
+
+  <p class="not">Nota her zaman yerinden (Bolahenk) yazılır; akort adı, icranın kaç ses kaydırıldığını söyler.<br>Perde adları Arel-Ezgi-Uzdilek sistemine göredir. Hesap, ahenk sisteminin adımı olan yarım ses üzerinden yapılır; koma farkları bu ızgaranın altında kalır.</p>
 </div>
 
 <script>
@@ -298,7 +312,28 @@ function hesapla(){
     if(tiz<pest){k+=" = "+(tiz/2).toString().replace(".",",")+" ses tiz";}
   }
   document.getElementById("rKayma").firstChild.textContent=k;
+  komaUyari("komaNot",karar,pest,m[1]);
+  komaRozet(karar,pest);
 }
+
+var KOMA={11:"Segâh",6:"Irak"};
+function komaRozet(karar,pest){
+  var r=document.getElementById("komaRozet");
+  if(KOMA[karar]&&pest!==0){
+    r.style.display="block";
+    document.getElementById("komaRozetAd").textContent=KOMA[karar];
+  }else{r.style.display="none";}
+}
+function komaUyari(id,karar,pest,kararAdi){
+  var el=document.getElementById(id);
+  if(KOMA[karar]&&pest!==0){
+    el.style.display="block";
+    el.textContent=KOMA[karar]+", Arel-Ezgi-Uzdilek sistemine göre bir koma perdesidir. Kaydırılınca varış da tam bir perdeye oturmaz; yazılan perde adı en yakın karşılıktır, gerçek karar ondan bir koma pesttir. Akort adı bundan etkilenmez.";
+  }else{el.style.display="none";}
+}
+document.getElementById("komaRozet").addEventListener("click",function(){
+  document.getElementById("komaNot").scrollIntoView({behavior:"smooth",block:"center"});
+});
 mSel.addEventListener("change",hesapla);
 pSel.addEventListener("change",hesapla);
 mSel.value=7;pSel.value=7;
@@ -321,13 +356,14 @@ function hesapla2(){
   document.getElementById("cevapPerde").textContent=PERDE_ADI[calinacak];
   var duy=(calinacak-5+12)%12;
   var det;
-  if(pest===0){det="Yerinden çal — yazıda "+NOTA[calinacak]+", diyapazonda karar "+NOTA[duy]+" duyulur.";}
+  if(pest===0){det="Yerinden çal; yazıda "+NOTA[calinacak]+", diyapazonda karar "+NOTA[duy]+" duyulur.";}
   else{
     var tiz=12-pest;
     var yon=(tiz<pest)?((tiz/2).toString().replace(".",",")+" ses tiz"):((pest/2).toString().replace(".",",")+" ses pest");
-    det="Kararı bu perdeye taşı ("+yon+") — yazıda "+NOTA[calinacak]+", diyapazonda karar "+NOTA[duy]+" duyulur.";
+    det="Kararı bu perdeye taşı ("+yon+"); yazıda "+NOTA[calinacak]+", diyapazonda karar "+NOTA[duy]+" duyulur.";
   }
   document.getElementById("cevapDetay").textContent=det;
+  komaUyari("komaNot2",karar,pest,m[1]);
 }
 m2.addEventListener("change",hesapla2);
 a2.addEventListener("change",hesapla2);
