@@ -286,7 +286,7 @@ function hesapla(){
   document.getElementById("rHarf").textContent="diyapazona göre "+a.harf;
   var duy=(calinan-5+12)%12;
   document.getElementById("rDuyulan").firstChild.textContent=NOTA[duy];
-  document.getElementById("rSesten").textContent="tezde: "+a.etiket;
+  document.getElementById("rSesten").textContent=a.etiket;
   var k;
   if(pest===0){k="Yerinden";}
   else{
@@ -298,7 +298,7 @@ function hesapla(){
 }
 mSel.addEventListener("change",hesapla);
 pSel.addEventListener("change",hesapla);
-mSel.value=1;pSel.value=8;
+mSel.value=7;pSel.value=7;
 hesapla();
 
 var PERDE_ADI=[
@@ -314,7 +314,7 @@ function hesapla2(){
   var karar=m[2];
   var calinacak=(karar-pest+12)%12;
   document.getElementById("kararinfo2").textContent="Doğal kararı: "+m[1]+" ("+NOTA[karar]+")";
-  document.getElementById("akortinfo2").textContent="Tezde: "+a.etiket;
+  document.getElementById("akortinfo2").textContent=a.etiket;
   document.getElementById("cevapPerde").textContent=PERDE_ADI[calinacak];
   var duy=(calinacak-5+12)%12;
   var det;
