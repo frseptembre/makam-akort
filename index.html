@@ -312,7 +312,7 @@ function hesapla(){
     if(tiz<pest){k+=" = "+(tiz/2).toString().replace(".",",")+" ses tiz";}
   }
   document.getElementById("rKayma").firstChild.textContent=k;
-  komaUyari("komaNot",karar,pest,m[1]);
+  komaUyari("komaNot",karar,pest,p[0]);
   komaRozet(karar,pest);
 }
 
@@ -324,11 +324,15 @@ function komaRozet(karar,pest){
     document.getElementById("komaRozetAd").textContent=KOMA[karar];
   }else{r.style.display="none";}
 }
-function komaUyari(id,karar,pest,kararAdi){
+function sesMiktari(pest){
+  if(pest===1)return "yarım ses";
+  return (pest/2).toString().replace(".",",")+" ses";
+}
+function komaUyari(id,karar,pest,varisAdi){
   var el=document.getElementById(id);
   if(KOMA[karar]&&pest!==0){
     el.style.display="block";
-    el.textContent=KOMA[karar]+", Arel-Ezgi-Uzdilek sistemine göre bir koma perdesidir. Kaydırılınca varış da tam bir perdeye oturmaz; yazılan perde adı en yakın karşılıktır, gerçek karar ondan bir koma pesttir. Akort adı bundan etkilenmez.";
+    el.textContent=KOMA[karar]+" perdesi koma bemollü olarak yazılır ve seslendirilir; dolayısıyla "+sesMiktari(pest)+" aşağıdan icra edildiğinde "+varisAdi+" perdesi de koma bemollü olmalıdır. Akort adı bundan etkilenmez.";
   }else{el.style.display="none";}
 }
 document.getElementById("komaRozet").addEventListener("click",function(){
@@ -363,7 +367,7 @@ function hesapla2(){
     det="Kararı bu perdeye taşı ("+yon+"); yazıda "+NOTA[calinacak]+", diyapazonda karar "+NOTA[duy]+" duyulur.";
   }
   document.getElementById("cevapDetay").textContent=det;
-  komaUyari("komaNot2",karar,pest,m[1]);
+  komaUyari("komaNot2",karar,pest,PERDE_ADI[calinacak]);
 }
 m2.addEventListener("change",hesapla2);
 a2.addEventListener("change",hesapla2);
